@@ -1,0 +1,240 @@
+package javaapplication2;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+/**
+ *
+ * @author w1495619
+ */
+public class JavaApplication2 {
+
+    static String roomName;
+    static int room = 0;
+    static String option;
+    static String line;
+    static String name;
+
+    public static void main(String[] args) throws IOException {
+
+        String TheOperatorString;
+        char TheOperatorChar;
+
+        Room[] hotel = new Room[10];
+        hotel[0] = new Room();
+        hotel[1] = new Room();
+        hotel[2] = new Room();
+        hotel[3] = new Room();
+        hotel[4] = new Room();
+        hotel[5] = new Room();
+        hotel[6] = new Room();
+        hotel[7] = new Room();
+        hotel[8] = new Room();
+        hotel[9] = new Room();
+
+        do {
+
+            System.out.println("Enter a to Add a customer to room ");
+            System.out.println("Enter v to View all Rooms ");
+            System.out.println("Enter d to Delete customer from room ");
+            System.out.println("Enter l data back from a file into the array.");
+            System.out.println("Enter s to save program array into plain text");
+
+            Scanner input = new Scanner(System.in);
+
+            TheOperatorString = input.next();
+
+            TheOperatorChar = TheOperatorString.charAt(0);
+
+            switch (TheOperatorChar) {
+
+                case 'a':
+
+                    Add(hotel);
+
+                    break;
+
+                case 'v':
+
+                    View(hotel);
+
+                    break;
+
+                case 'd':
+
+                    Delete(hotel);
+
+                    break;
+
+                case 'l':
+
+                    Load(hotel);
+
+                    break;
+
+                case 's':
+
+                    Save(hotel);
+
+                    break;
+
+            }
+
+        } while (TheOperatorChar != 'e');
+
+        while (room <= 10) {
+
+            Add(hotel);
+
+            View(hotel);
+
+            Delete(hotel);
+
+            Load(hotel);
+
+            Save(hotel);
+
+        }
+
+    }
+
+    private static void Add(Room[] hotel) {
+
+        System.out.println("Enter room number  ");
+
+        Scanner input = new Scanner(System.in);
+
+        room = input.nextInt();
+
+        System.out.println("Enter name for room " + room + " :");
+
+        roomName = input.next();
+        hotel[room].setName(roomName);
+
+    }
+
+    private static void View(Room[] hotel) {
+
+        for (int x = 0; x < 10; x++) {
+
+            System.out.println("room " + x + " occupied by " + hotel[x].getName());
+
+        }
+
+    }
+
+    private static void Delete(Room[] hotel) {
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.println(" Enter a Name");
+
+        option = input.next();
+
+        for (int z = 0; z < 10; z++) {
+
+            if (option.equals(hotel[z].getName())) {
+
+                hotel[room] = new Room();
+
+            }
+
+        }
+
+    }
+
+    private static void Load(Room[] hotel) throws IOException {
+
+        int e = 0;
+
+        BufferedReader to;
+
+        try {
+
+            to = new BufferedReader(new FileReader("load.txt"));
+
+            line = to.readLine();
+
+            while (line != null) {
+
+                System.out.println(line);
+
+                e++;
+
+                line = to.readLine();
+
+            }
+
+        } catch (Exception exc) {
+        }
+
+    }
+
+    private static void Save(Room[] hotel) {
+
+        int e;
+
+        try {
+
+            FileWriter exFile = new FileWriter("load.txt");
+
+            for (e = 0; e < 10; e++) {
+
+                name = hotel[e].getName();
+
+                if (hotel[e].mainName.equals("A")) {
+
+                    exFile.write(" Room" + " " + e + " " + " ");
+
+                } else {
+
+                    exFile.write(" Room" + " " + e + " " + " is occupied by "
+                            + " " + " '" + hotel[e].mainName + "' " + " " + "");
+
+                }
+
+                exFile.write("\n");
+
+            }
+
+            exFile.close();
+
+        } catch (Exception exc) {
+        }
+
+    }
+
+}
+package javaapplication2;
+class Room {
+    String mainName;
+ int guestsInRoom;
+    String getName;
+ 
+  public Room(String a) {
+mainName = a;
+System.out.println("made a room ");
+}
+ 
+ 
+ 
+ public Room() {
+ mainName = "x";
+ System.out.println("made a room ");
+ }
+ public void setName(String aName) {
+ System.out.println("add name class method ");
+ mainName = aName;
+ }
+ public String getName() {
+ return mainName;
+ }
+
+
+        }
+
+
+

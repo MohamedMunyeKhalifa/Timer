@@ -1,0 +1,229 @@
+package hotel.coureswork;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.*;
+/**
+ *
+ * @author w1495619
+ */
+public class HotelCoureswork {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+       Scanner input = new Scanner(System.in);
+
+        String roomName = null;
+        int roomNumber = 0;
+
+        String Menu;
+
+        String[] hotel = new String[10];
+
+        initialise(hotel);
+
+        while (roomNumber < 10) {
+
+            System.out.println("Categories:");
+
+            System.out.println("A: add customer");
+            System.out.println("V:view all rooms");
+            System.out.println("E: display empty rooms");
+            System.out.println("D: delete a customer");
+            System.out.println("F: find room by customer's name");
+            System.out.println("S:store program array into plain text");
+            System.out.println("L:  load data back from a file into the array");
+            System.out.println("O: view room by alphabetically name");
+
+            Menu = input.next();
+
+            if (Menu.equals("V")) {
+                view(hotel);
+            }
+
+            if (Menu.equals("A")) {
+                System.out.println("please enter the room number (0-9):");
+                roomNumber = input.nextInt();
+
+                System.out.println("please enter the customers name" + " " + roomNumber + " " + ":");
+                roomName = input.next();
+
+                add(hotel, roomName, roomNumber);
+                System.out.println(" ");
+            }
+
+            if (Menu.equals("E")) {
+                empty(hotel, roomName);
+            }
+
+            if (Menu.equals("D")) {
+                view(hotel);
+
+                System.out.println("Discard "
+                        + "a customer from room:");
+                roomNumber = input.nextInt();
+
+                delete(hotel, roomNumber);
+
+                view(hotel);
+                System.out.println("delete from room");
+            }
+
+            if (Menu.equals("F")) {
+                find(hotel);
+            }
+
+            if (Menu.equals("S")) {
+                save(hotel);
+            }
+
+            if (Menu.equals("L")) {
+                load(hotel);
+            }
+
+            if (Menu.equals("O")) {
+                order(hotel);
+            }
+
+        }
+
+    }
+
+    private static void initialise(String hotelRef[]) {
+
+        int z;
+
+        for (z = 0; z < 10; z++) {
+            hotelRef[z] = "A";
+
+        }
+        System.out.println("initialise");
+    }
+
+    private static void add(String addHotel[], String name, int Number) {
+
+        addHotel[Number] = name;
+
+    }
+
+    private static void view(String viewHotel[]) {
+
+        int z;
+        int number = 0;
+
+        for (z = 0; z < 10; z++) {
+
+            if (viewHotel[z].equals("A")) {
+                System.out.println("room" + " " + z + " " + "is empty");
+            } else {
+                System.out.println("room" + " " + z + " " + "is occupied by" + " " + viewHotel[z]);
+            }
+        }
+
+    }
+
+    private static void empty(String emptyHotel[], String name) {
+
+        int z;
+        int number = 0;
+
+        for (z = 0; z < 10; z++) {
+
+            String Customer = name;
+
+            if (emptyHotel[z].equals("A")) {
+                System.out.println("room" + " " + z + " " + "is empty");
+            }
+
+        }
+    }
+
+    private static void delete(String deleteHotel[], int Number) {
+
+        deleteHotel[Number] = "A";
+
+    }
+
+    private static void find(String findHotel[]) {
+        String customer;
+        int z;
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter customer name to search for a room:");
+        customer = input.next();
+
+        for (z = 0; z < 10; z++) {
+
+            if (findHotel[z].equals(customer)) {
+                System.out.println("room" + " " + z + " " + "is occupied by" + " " + findHotel[z]);
+            }
+        }
+
+    }
+
+    private static void save(String saveHotel[]) {
+        String name;
+        int z;
+        try {
+            FileWriter exFile = new FileWriter("NAMES1.txt");
+
+            for (z = 0; z < 10; z++) {
+                name = saveHotel[z];
+
+                if (saveHotel[z].equals("A")) {
+                    exFile.write("room" + " " + z + " " + "is empty\n");
+                } else {
+                    exFile.write("room" + " " + z + " " + "is occupied by" + " " + saveHotel[z] + "" + "is empty\n");
+                }
+                exFile.write("\n");
+            }
+
+            exFile.close();
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    private static void load(String loadHotel[]) {
+        String line;
+        int z = 0;
+        BufferedReader in;
+
+        try {
+
+            in = new BufferedReader(new FileReader("NAMES.txt"));
+            line = in.readLine();
+
+            while (line != null) {
+
+                System.out.println(line);
+                z++;
+                line = in.readLine();
+            }
+
+        } catch (Exception exc) {
+            exc.printStackTrace();
+
+        }
+
+    }
+
+    private static void order(String orderHotel[]) {
+         String[] Hoteltemp = orderHotel.clone();
+         Arrays.sort(Hoteltemp);
+        
+        
+        for (int ii = 0; ii < Hoteltemp.length; ii++) {
+         for (int jj=0;jj <  orderHotel.length; jj++){
+             if(Hoteltemp[ii].equals(orderHotel[jj]))
+             {
+                 System.out.println(Hoteltemp[ii]+" room  " +    jj );
+                 break;
+             } 
+
+         }
+        }
+    }
+}
